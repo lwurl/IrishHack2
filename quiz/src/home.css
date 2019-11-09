@@ -39,7 +39,7 @@ img{
 .p2{
     color: #FFFFFF;
     text-align:center;
-    font-size:16pt;
+    font-size:20pt;
     margin-left: 15%;
     margin-right: 15%;
     margin-top:10px;
@@ -48,6 +48,8 @@ img{
 hr{
     margin-left: 15%;
     margin-right: 15%;
+    margin-top: 30px;
+    margin-bottom: 30px;
     border:2.5px solid;
     border-color:#cbcaca;
 }
