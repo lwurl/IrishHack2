@@ -1,3 +1,5 @@
+
+
 body {
     background-color: #013364;
   }
@@ -12,17 +14,31 @@ img{
     size: 100%;
 }
 
-.p1{
+.p1a{
+    font-family: 'Roboto', sans-serif;
+    color:#d30b0d;
+    text-align:center;
+    font-size:16pt;
+    margin-bottom:0px;
+    margin-left: 15%;
+    margin-right: 15%;
+
+}
+
+.p1b{
+    font-family: 'Roboto', sans-serif;
     color: #FFFFFF;
     text-align:center;
     font-size:16pt;
-    margin:20px;
+    margin-top:0px;
+    margin-left: 15%;
+    margin-right: 15%;
     margin-bottom:10px;
 }
 
 .p2{
     color: #FFFFFF;
-    float:right;
+    text-align:center;
     font-size:16pt;
     margin-left: 15%;
     margin-right: 15%;
@@ -30,8 +46,10 @@ img{
 }
 
 hr{
-    border:1px dashed;
-    border-color:darkred;
+    margin-left: 15%;
+    margin-right: 15%;
+    border:2.5px solid;
+    border-color:#cbcaca;
 }
 
 .buttonMain{
@@ -43,6 +61,7 @@ hr{
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+    font-family: 'Roboto', sans-serif;
     border-radius:10px;
     display:inline-block;
   }
