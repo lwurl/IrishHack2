@@ -7,11 +7,40 @@ import { db } from './firebase';
 class detailedResults extends React.Component {
     state = {
         responses: {},
-        quotes: {}
+        quotes: {},
+        blurb_list: []
     };
+
+    buildLinks = () => {
+        let blurb_list = [];
+        for (var topic in this.state.responses) {
+            console.log(topic);
+            for (var question in this.state.responses[topic]) {
+                // console.log(question);
+                if (this.state.responses[topic][question]['answered'] === true) {
+                    console.log(this.state.responses[topic][question]);
+                    let sortedRanks = [];
+
+                    for (var key in this.state.responses[topic][question]) {
+                        if (this.state.responses[topic][question].hasOwnProperty(key) && key !== 'answered') {
+                            sortedRanks.push( [ key, this.state.responses[topic][question][key] ] );
+                        }
+                    }
+
+                    sortedRanks.sort((a, b) => a[1] - b[1]);
+                    console.log(sortedRanks);
+
+                    blurb_list.push(this.state.quotes[topic][question]['blurb']);
+                }
+            }
+        }
+        this.setState({ blurb_list });
+        console.log(blurb_list);
+    }
 
     async componentDidMount() {
         await this.getResponses();
+        this.buildLinks();
     }
 
     getResponses = async () => {
@@ -47,8 +76,17 @@ class detailedResults extends React.Component {
         return '';
     }
 
+    printLinks = () => {
+        let returns = [];
+        this.state.blurb_list.forEach((blurb, index) => {
+            returns.push(<a href={`#q${index+1}`}>{blurb}</a>);
+        });
+        return returns;
+    }
+
     printQuotes = () => {
         let returns = [];
+        let counter = 1;
         for (var topic in this.state.responses) {
             console.log(topic);
             for (var question in this.state.responses[topic]) {
@@ -66,25 +104,24 @@ class detailedResults extends React.Component {
                     sortedRanks.sort((a, b) => a[1] - b[1]);
                     console.log(sortedRanks);
 
-
-                    // console.log(this.state.quotes[topic][question][sortedRanks[0][0]]);
-
-
                     returns.push(<Fragment>
-                            <hr></hr>
+                        <hr></hr>
+                        <a name={`q${counter}`}>
                             <h2>{this.state.quotes[topic][question]['blurb']}</h2>
-                            <div class="subtext">{this.state.quotes[topic][question]['desc']}
-                            </div>
-                            
-                            <ul>
-                                <li><span class="number">1: {this.convertName(sortedRanks[0][0])}</span><span class="box quote">{this.state.quotes[topic][question][sortedRanks[0][0]]}</span></li>
-                                <li><span class="number">2: {this.convertName(sortedRanks[1][0])}</span><span class="box quote">{this.state.quotes[topic][question][sortedRanks[1][0]]}</span></li>
-                                <li><span class="number">3: {this.convertName(sortedRanks[2][0])}</span><span class="box quote">{this.state.quotes[topic][question][sortedRanks[2][0]]}</span></li>
-                                <li><span class="number">4: {this.convertName(sortedRanks[3][0])}</span><span class="box quote">{this.state.quotes[topic][question][sortedRanks[3][0]]}</span></li>
-                                <li><span class="number">5: {this.convertName(sortedRanks[4][0])}</span><span class="box quote">{this.state.quotes[topic][question][sortedRanks[4][0]]}</span></li>
-                            </ul>
-                            </Fragment>);
-                        // </Fragment>
+                        </a>
+                        <div className="subtext">{this.state.quotes[topic][question]['desc']}
+                        </div>
+                        
+                        <ul>
+                            <li><span className="number">1: {this.convertName(sortedRanks[0][0])}</span><span className="box quote">{this.state.quotes[topic][question][sortedRanks[0][0]]}</span></li>
+                            <li><span className="number">2: {this.convertName(sortedRanks[1][0])}</span><span className="box quote">{this.state.quotes[topic][question][sortedRanks[1][0]]}</span></li>
+                            <li><span className="number">3: {this.convertName(sortedRanks[2][0])}</span><span className="box quote">{this.state.quotes[topic][question][sortedRanks[2][0]]}</span></li>
+                            <li><span className="number">4: {this.convertName(sortedRanks[3][0])}</span><span className="box quote">{this.state.quotes[topic][question][sortedRanks[3][0]]}</span></li>
+                            <li><span className="number">5: {this.convertName(sortedRanks[4][0])}</span><span className="box quote">{this.state.quotes[topic][question][sortedRanks[4][0]]}</span></li>
+                        </ul>
+                        </Fragment>);
+                    
+                    counter++;
                 }
             }
         }
@@ -96,6 +133,11 @@ class detailedResults extends React.Component {
         <div>
             <h1>Detailed Results</h1>
             <div class="subtext">Check out your quote rankings for each question and see which candidate said each quote. 
+            </div>
+            <div className="links">
+            {
+                this.printLinks()
+            }
             </div>
             {
                 this.printQuotes()
