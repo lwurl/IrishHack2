@@ -1,4 +1,6 @@
 h1{
+    text-align:center;
+    Color: #FFFFFF;
     font-size: 48px;
 }
 
@@ -15,19 +17,21 @@ h1{
   }
 
   .c1{
+    color: #FFFFFF;
     font-size:32pt;
     margin:20px;
     margin-bottom:10px;
   }
 
   .c2{
+    color: #FFFFFF;
     font-size:16pt;
     margin:5px;
     margin-left:20px;
   }
 
-  .button {
-    background-color: #008CBA; /* Green */
+  .buttonResults {
+    background-color: #428bca; /* Green */
     border: none;
     color: white;
     padding: 15px 15px;

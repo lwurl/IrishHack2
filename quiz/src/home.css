@@ -1,20 +1,19 @@
 body {
-    background-color: lightblue;
+    background-color: #013364;
   }
 
-h1 {
-    text-align: center;
-    font-size: 32px;
-    margin: 10px;
-}
-
 img{
+    width: 25%;
+    height: 25%;
+    margin-top: 20px;
     display: block;
     margin-left: auto;
     margin-right: auto;
+    size: 100%;
 }
 
 .p1{
+    color: #FFFFFF;
     text-align:center;
     font-size:16pt;
     margin:20px;
@@ -22,6 +21,7 @@ img{
 }
 
 .p2{
+    color: #FFFFFF;
     float:right;
     font-size:16pt;
     margin-left: 15%;
@@ -34,10 +34,10 @@ hr{
     border-color:darkred;
 }
 
-.button {
-    background-color: #008CBA; /* Green */
-    border: none;
+.buttonMain{
+    background-color:#428bca;
     color: white;
+    border:none;
     padding: 15px 15px;
     text-align: center;
     text-decoration: none;
@@ -48,6 +48,7 @@ hr{
   }
 
   .center_div{
+    background-color:#013364;
     text-align: center;
     align-self: center;
     position: absolute;
