@@ -2,7 +2,6 @@ import React from 'react';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { db } from './firebase';
 import './quiz.css'
-import {Link} from 'react-router-dom';
 
 const getItems = (count, offset = 0) =>
     Array.from({ length: count }, (v, k) => k).map(k => ({
@@ -57,22 +56,87 @@ class Quiz extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      items: getItems(10),
-      selected: [
-        {
-          id: '0',
-          content: '"This is a quote"'
-        },
-        {
-          id: '1',
-          content: '"Yet another quote"'
-        },
-        {
-          id: '2',
-          content: '"Quote"'
-        },
-      ]
+      items: [],
+      selected: [],
+      questionCategoryList: []
     };
+    console.log(this.state.items);
+    // this.loadQuotes();
+  }
+
+  async componentDidMount() {
+    await this.getQuizTopics();
+    await this.loadQuotes();
+  }
+
+  getQuizTopics = async () => {
+    await db.collection("users").get().then((querySnapshot) => {
+      // only one user for now
+      let questionCategoryList = [];
+      querySnapshot.forEach((doc) => {
+        const userData = doc.data();
+        const categoriesData = userData['categories'];
+        // console.log(doc.id);
+        // console.log(doc.data());
+        // console.log(categoriesData);
+        let totalPoints = 0;
+        for (var cat in categoriesData){
+          totalPoints += categoriesData[cat];
+        }
+        let questionsPerCat = [];
+        for (var cat in categoriesData){
+          questionsPerCat.push([cat, Math.min(Math.floor(10*categoriesData[cat] / totalPoints), 3)]);
+        }
+
+        for (let i = 0; i < questionsPerCat.length; i++){
+          if (questionsPerCat[i][1] > 0){
+            for (let j = 0; j < questionsPerCat[i][1]; j++){
+              questionCategoryList.push(questionsPerCat[i][0]);
+            }
+          }
+        }
+        // console.log(questionsPerCat);
+        // console.log(questionCategoryList);
+      })
+      this.setState({ questionCategoryList });
+    });
+  }
+
+  loadQuotes = async () => {
+    let items = [];
+    await db.collection("quotes").get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        // db.collection("quotes").doc(doc.id).get().then((innerSnap) => {
+        //   innerSnap.forEach(d => {
+        //     console.log(d.data());
+        //   })
+        // });
+        if (doc.id === this.state.questionCategoryList.pop()) {
+          const qs = doc.data();
+          // console.log(qs);
+            for (var q in qs){
+              if (q === 'question1'){
+                // console.log(qs[q]);
+                for (var candidate in qs[q]) {
+                  // console.log(candidate);
+                  items.push({id: candidate, content: qs[q][candidate]});
+                }
+              }
+            }
+          // doc.data().forEach((q) => {
+            // console.log(q);
+          // })
+        }
+
+        // console.log(items);
+        // console.log(this.state.items);
+        // console.log(doc.id);
+        // console.log(doc.data());
+      });
+    });
+    console.log(items);
+    this.setState({ items });
+    console.log(this.state.items);
   }
 
   id2List = {
@@ -117,22 +181,24 @@ class Quiz extends React.Component {
             selected: result.droppable2
         });
     }
-
-    db.collection("quotes").get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-          console.log(doc.data());
-      });
-    });
   };
 
   render() {
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
+        <div className="top">
+          <h1>
+            ISSUE
+          </h1>
+        </div>
         <div>
-        <Link to='/results'> 
-          <div className="center_div"><button type="button" className="button"><b>See Results</b></button></div>
-        </Link>
           <div className="left_col">
+            <h2>
+              Rank the quotes based on how much you agree with each one
+            </h2>
+            <p>
+              Agree with MOST
+            </p>
             <Droppable droppableId="droppable2">
               {(provided, snapshot) => (
                   <div
@@ -161,6 +227,9 @@ class Quiz extends React.Component {
                   </div>
               )}
             </Droppable>
+            <p>
+              Agree with LEAST
+            </p>
           </div>
           <div className="right_col">
             <Droppable droppableId="droppable">
@@ -197,6 +266,5 @@ class Quiz extends React.Component {
     )
   }
 }
-
 
 export default Quiz;
