@@ -107,12 +107,8 @@
 }
 
 .take_quiz{
-  text-align: center;
-  align-self: center;
-  position: absolute;
-  padding-bottom:   15px;
-  left: 46.9%;
-  top:  145%;
+    text-align: center;
+    align-self: center;
 }
 
 .icon{
