@@ -1,6 +1,6 @@
 import React from 'react';
 import './topics.css';
-import {Link} from 'react-router-dom';
+import {Redirect, withRouter} from 'react-router-dom';
 import gun from './images/gun.svg'
 import econ from './images/economy.svg'
 import edu from './images/education.svg'
@@ -20,8 +20,10 @@ class Topics extends React.Component {
         environment: 50,
         guncontrol: 50,
         healthcare: 50
-    }
+      },
+      move: false,
     };
+    this.addTopicPreferences = this.addTopicPreferences.bind(this);
   }
 
   handleChange = (event, val) => {
@@ -31,6 +33,7 @@ class Topics extends React.Component {
   }
 
   addTopicPreferences = async () => {
+    const t = this;
     let doc_id;
     await db.collection("users").get().then((querySnapshot) => {
       // only one user for now
@@ -50,6 +53,7 @@ class Topics extends React.Component {
     })
     .then(function() {
       console.log("Document successfully updated!");
+      t.setState({ move: true });
     })
     .catch(function(error) {
         // The document probably doesn't exist.
@@ -58,6 +62,9 @@ class Topics extends React.Component {
   }
 
   render() {
+    if (this.state.move){
+      return <Redirect to='/quiz' />
+    }
     return (
       <div>
         <h1>Topics</h1>
@@ -117,12 +124,10 @@ class Topics extends React.Component {
         <div className="label_div very">Very important</div> 
         </div>
 
-        <Link to='/quiz'> 
-          <div className="take_quiz"><button type="button" className="buttonTop" onClick={() => this.addTopicPreferences()}><b>Take Quiz</b></button></div>
-        </Link>
+        <div className="take_quiz"><button type="button" className="buttonTop" onClick={() => this.addTopicPreferences()}><b>Take Quiz</b></button></div>
       </div>
     )
   }
 }
 
-export default Topics;
+export default withRouter(Topics);
