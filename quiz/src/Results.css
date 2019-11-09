@@ -1,0 +1,27 @@
+h1{
+    font-size: 48px;
+}
+
+.i1{
+    display: inline-block;
+    width: 20%;
+    height: 20%;
+  }
+
+  .i2{
+    display: inline-block;
+    width: 10%;
+    height: 10%;
+  }
+
+  .c1{
+    font-size:32pt;
+    margin:20px;
+    margin-bottom:10px;
+  }
+
+  .c2{
+    font-size:16pt;
+    margin:5px;
+    margin-left:20px;
+  }
