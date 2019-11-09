@@ -1,5 +1,6 @@
 import React from 'react';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { db } from './firebase';
 import './quiz.css'
 
 const getItems = (count, offset = 0) =>
@@ -52,23 +53,26 @@ const getListStyle = isDraggingOver => ({
 });
 
 class Quiz extends React.Component {
-  state = {
-    items: getItems(10),
-    selected: [
-      {
-        id: '0',
-        content: '"This is a quote"'
-      },
-      {
-        id: '1',
-        content: '"Yet another quote"'
-      },
-      {
-        id: '2',
-        content: '"Quote"'
-      },
-    ]
-  };
+  constructor(props){
+    super(props);
+    this.state = {
+      items: getItems(10),
+      selected: [
+        {
+          id: '0',
+          content: '"This is a quote"'
+        },
+        {
+          id: '1',
+          content: '"Yet another quote"'
+        },
+        {
+          id: '2',
+          content: '"Quote"'
+        },
+      ]
+    };
+  }
 
   id2List = {
     droppable: 'items',
@@ -77,7 +81,7 @@ class Quiz extends React.Component {
 
   getList = id => this.state[this.id2List[id]];
 
-  onDragEnd = result => {
+  onDragEnd = async (result) => {
     const { source, destination } = result;
 
     // dropped outside the list
@@ -112,6 +116,12 @@ class Quiz extends React.Component {
             selected: result.droppable2
         });
     }
+
+    db.collection("quotes").get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+          console.log(doc.data());
+      });
+    });
   };
 
   render() {
