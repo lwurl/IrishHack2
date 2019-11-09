@@ -13,7 +13,7 @@ class Home extends React.Component {
 
         <p className="p1a"><b>4 out of 10 eligible voters do not vote.</b></p>
         <p className="p1b">How can we motivate the uninformed voter to find a candidate that represents them in quick, easy, and engaging way?</p>
-        <p className="p1a"><b>There are currently over 20 major party candidates asking us to vote for them in the 2020 election to be our president.</b> </p>
+        <p className="p1a"><b>There are currently over 20 major party candidates running for president in the 2020 election.</b> </p>
         <p className="p1b">How can we discern which candidate best represents our views on the issues that are most important to us? </p>
         <p className="p1a"><b>Over 2 million articles are published on the web everyday and with the election being one of the hottest topics. </b></p>
         <p className="p1b">How can we avoid the bias of media summaries and look directly at what candidates are saying? </p>
