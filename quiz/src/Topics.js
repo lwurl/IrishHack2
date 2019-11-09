@@ -49,6 +49,63 @@ class Topics extends React.Component {
         'sanders': 0,
         'trump': 0,
         'warren': 0
+      },
+      responses: {
+        'economy': {
+          'question1': {
+            'answered': false
+          },
+          'question2': {
+            'answered': false
+          },
+          'question3': {
+            'answered': false
+          },
+        },
+        'environment': {
+          'question1': {
+            'answered': false
+          },
+          'question2': {
+            'answered': false
+          },
+          'question3': {
+            'answered': false
+          },
+        },
+        'guncontrol': {
+          'question1': {
+            'answered': false
+          },
+          'question2': {
+            'answered': false
+          },
+          'question3': {
+            'answered': false
+          },
+        },
+        'healthcare': {
+          'question1': {
+            'answered': false
+          },
+          'question2': {
+            'answered': false
+          },
+          'question3': {
+            'answered': false
+          },
+        },
+        'education': {
+          'question1': {
+            'answered': false
+          },
+          'question2': {
+            'answered': false
+          },
+          'question3': {
+            'answered': false
+          },
+        },
       }
     })
     .then(function() {
