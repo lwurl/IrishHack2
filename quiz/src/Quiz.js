@@ -2,6 +2,7 @@ import React from 'react';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { db } from './firebase';
 import './quiz.css'
+import logoSm from './images/logoMd.svg'
 
 const getItems = (count, offset = 0) =>
     Array.from({ length: count }, (v, k) => k).map(k => ({
@@ -40,14 +41,14 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   margin: `0 0 ${grid}px 0`,
 
   // change background colour if dragging
-  background: isDragging ? "lightgreen" : "grey",
-
+  background: isDragging ? "#d30b0d" : "#428bca",
+  color: "#FFFFFF",
   // styles we need to apply on draggables
   ...draggableStyle
 });
 
 const getListStyle = isDraggingOver => ({
-  background: isDraggingOver ? "lightblue" : "lightgrey",
+  background: isDraggingOver ? "#cbcaca" : "#cbcaca",
   padding: grid,
   width: 250
 });
@@ -222,16 +223,18 @@ class Quiz extends React.Component {
           <h1>
             ISSUE
           </h1>
+          <p className='inst'>Rank the quotes based on how much you agree with each one.</p>
+          <p className='inst'>You must rank all the quotes before moving onto the next issue.</p>
         </div>
         <div>
           <div className="left_col">
             <h2>
-              Rank the quotes based on how much you agree with each one
+              Ranked Quotes
             </h2>
             <p>
               Agree with MOST
             </p>
-            <Droppable droppableId="droppable2">
+            <Droppable droppableId="droppable2" classname='drop'>
               {(provided, snapshot) => (
                   <div
                       ref={provided.innerRef}
@@ -240,7 +243,8 @@ class Quiz extends React.Component {
                           <Draggable
                               key={item.id}
                               draggableId={item.id}
-                              index={index}>
+                              index={index}
+                              className = 'drag'>
                               {(provided, snapshot) => (
                                   <div
                                       ref={provided.innerRef}
@@ -264,7 +268,10 @@ class Quiz extends React.Component {
             </p>
           </div>
           <div className="right_col">
-            <Droppable droppableId="droppable">
+            <h2>
+              Unranked Quotes
+            </h2>
+            <Droppable droppableId="droppable" className='drop'>
                 {(provided, snapshot) => (
                     <div
                         ref={provided.innerRef}
@@ -273,7 +280,8 @@ class Quiz extends React.Component {
                             <Draggable
                                 key={item.id}
                                 draggableId={item.id}
-                                index={index}>
+                                index={index}
+                                className = 'drag'>
                                 {(provided, snapshot) => (
                                     <div
                                         ref={provided.innerRef}
@@ -293,8 +301,11 @@ class Quiz extends React.Component {
                 )}
             </Droppable>
           </div>
+          <div className="logo_div">
+            <img src={logoSm} alt="logoSm"/>
+            </div>
           <div className="center_div">
-            <button type="button" className="button" onClick={() => this.moveToNextQuestion()} disabled={this.state.items.length != 0}>
+            <button type="button" className="buttonQuiz" onClick={() => this.moveToNextQuestion()} disabled={this.state.items.length != 0}>
               <b>{this.state.questionCategoryList.length > 0 ? 'Next Question' : 'See Results'}</b>
             </button>
           </div>
