@@ -3,12 +3,7 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { db } from './firebase';
 import './quiz.css'
 import logoSm from './images/logoMd.svg'
-
-const getItems = (count, offset = 0) =>
-    Array.from({ length: count }, (v, k) => k).map(k => ({
-        id: `item-${k + offset}`,
-        content: `item ${k + offset}`
-    }));
+import {Redirect} from 'react-router-dom';
 
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -60,10 +55,14 @@ class Quiz extends React.Component {
       items: [],
       selected: [],
       questionCategoryList: [],
-      previousQuestions: {}
+      previousQuestions: {},
+      move: false,
+      question_category: '',
+      blurb: '',
+      desc: ''
     };
     console.log(this.state.items);
-    // this.loadQuotes();
+    this.moveToNextQuestion = this.moveToNextQuestion.bind(this);
   }
 
   async componentDidMount() {
@@ -107,9 +106,25 @@ class Quiz extends React.Component {
   loadQuotes = async () => {
     let items = [];
     const question_category = this.state.questionCategoryList.pop();
-    console.log(this.state.questionCategoryList);
     const previousQuestions = this.state.previousQuestions;
     let question_no;
+    switch (question_category) {
+      case 'economy':
+      this.setState({ question_category: 'Economy' });
+      break;
+      case 'education':
+      this.setState({ question_category: 'Education' });
+      break;
+      case 'environment':
+      this.setState({ question_category: 'Environment' });
+      break;
+      case 'guncontrol':
+      this.setState({ question_category: 'Gun Control' });
+      break;
+      case 'healthcare':
+      this.setState({ question_category: 'Health Care' });
+      break;
+    }
     if (question_category in this.state.previousQuestions) {
       question_no = previousQuestions[question_category]+1;
       this.setState({ previousQuestions: {...previousQuestions, [question_category]: previousQuestions[question_category]+1}});
@@ -117,8 +132,7 @@ class Quiz extends React.Component {
       question_no = 1;
       this.setState({ previousQuestions: {...previousQuestions, [question_category]: 1}});
     }
-    console.log(question_no);
-    console.log(question_category);
+
     await db.collection("quotes").get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         if (doc.id === question_category) {
@@ -130,6 +144,10 @@ class Quiz extends React.Component {
                 for (var candidate in questions_dict[q]) {
                   if (candidate !== 'blurb' && candidate !== 'desc'){
                     items.push({id: candidate, content: questions_dict[q][candidate]});
+                  } else if (candidate === 'blurb'){
+                    this.setState({ blurb: questions_dict[q][candidate] });
+                  } else if (candidate === 'desc'){
+                    this.setState({ desc: questions_dict[q][candidate] });
                   }
                 }
               }
@@ -187,6 +205,7 @@ class Quiz extends React.Component {
   };
 
   moveToNextQuestion = async () => {
+    const t = this;
     let curr_total = {};
     let doc_id;
     await db.collection("users").get().then((querySnapshot) => {
@@ -213,18 +232,27 @@ class Quiz extends React.Component {
         // The document probably doesn't exist.
         console.error("Error updating document: ", error);
     });
+    if (this.state.questionCategoryList.length === 0){
+      t.setState({ move: true });
+    }
     this.loadQuotes();
   }
 
   render() {
+    if (this.state.move){
+      return <Redirect to='/results' />
+    }
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
         <div className="top">
           <h1>
-            ISSUE
+            {`${this.state.question_category}: ${this.state.blurb}`}
           </h1>
+          <p className='inst'>{this.state.desc}</p>
+          <br/>
           <p className='inst'>Rank the quotes based on how much you agree with each one.</p>
           <p className='inst'>You must rank all the quotes before moving onto the next issue.</p>
+          <br/>
         </div>
         <div>
           <div className="left_col">
