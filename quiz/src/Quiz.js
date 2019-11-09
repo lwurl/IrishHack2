@@ -58,7 +58,8 @@ class Quiz extends React.Component {
     this.state = {
       items: [],
       selected: [],
-      questionCategoryList: []
+      questionCategoryList: [],
+      previousQuestions: {}
     };
     console.log(this.state.items);
     // this.loadQuotes();
@@ -104,38 +105,39 @@ class Quiz extends React.Component {
 
   loadQuotes = async () => {
     let items = [];
+    const question_category = this.state.questionCategoryList.pop();
+    console.log(this.state.questionCategoryList);
+    const previousQuestions = this.state.previousQuestions;
+    let question_no;
+    if (question_category in this.state.previousQuestions) {
+      question_no = previousQuestions[question_category]+1;
+      this.setState({ previousQuestions: {...previousQuestions, [question_category]: previousQuestions[question_category]+1}});
+    } else {
+      question_no = 1;
+      this.setState({ previousQuestions: {...previousQuestions, [question_category]: 1}});
+    }
+    console.log(question_no);
+    console.log(question_category);
     await db.collection("quotes").get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        // db.collection("quotes").doc(doc.id).get().then((innerSnap) => {
-        //   innerSnap.forEach(d => {
-        //     console.log(d.data());
-        //   })
-        // });
-        if (doc.id === this.state.questionCategoryList.pop()) {
-          const qs = doc.data();
-          // console.log(qs);
-            for (var q in qs){
-              if (q === 'question1'){
-                // console.log(qs[q]);
-                for (var candidate in qs[q]) {
-                  // console.log(candidate);
-                  items.push({id: candidate, content: qs[q][candidate]});
+        if (doc.id === question_category) {
+          const questions_dict = doc.data();
+          console.log(questions_dict);
+            for (var q in questions_dict){
+              if (q === `question${question_no}`){
+                console.log(questions_dict[q]);
+                for (var candidate in questions_dict[q]) {
+                  if (candidate !== 'blurb'){
+                    items.push({id: candidate, content: questions_dict[q][candidate]});
+                  }
                 }
               }
             }
-          // doc.data().forEach((q) => {
-            // console.log(q);
-          // })
         }
-
-        // console.log(items);
-        // console.log(this.state.items);
-        // console.log(doc.id);
-        // console.log(doc.data());
       });
     });
     console.log(items);
-    this.setState({ items });
+    this.setState({ items, selected: [] });
     console.log(this.state.items);
   }
 
@@ -182,6 +184,36 @@ class Quiz extends React.Component {
         });
     }
   };
+
+  moveToNextQuestion = async () => {
+    let curr_total = {};
+    let doc_id;
+    await db.collection("users").get().then((querySnapshot) => {
+      // only one user for now
+      querySnapshot.forEach((doc) => {
+        doc_id = doc.id;
+        curr_total = doc.data()['totals'];
+      });
+    });
+    console.log(curr_total);
+    const selected = this.state.selected;
+    const points = [10, 6, 3, 1, 0];
+    for (let i = 0; i < selected.length; i++){
+      const candidate = this.state.selected[i]['id'];
+      curr_total[candidate] += points[i];
+    }
+    await db.collection("users").doc(doc_id).update({
+      totals: curr_total
+    })
+    .then(function() {
+      console.log("Document successfully updated!");
+    })
+    .catch(function(error) {
+        // The document probably doesn't exist.
+        console.error("Error updating document: ", error);
+    });
+    this.loadQuotes();
+  }
 
   render() {
     return (
@@ -260,6 +292,11 @@ class Quiz extends React.Component {
                     </div>
                 )}
             </Droppable>
+          </div>
+          <div className="center_div">
+            <button type="button" className="button" onClick={() => this.moveToNextQuestion()} disabled={this.state.items.length != 0}>
+              <b>{this.state.questionCategoryList.length > 0 ? 'Next Question' : 'See Results'}</b>
+            </button>
           </div>
         </div>
       </DragDropContext>
