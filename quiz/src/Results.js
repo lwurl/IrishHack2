@@ -99,9 +99,9 @@ class Results extends React.Component {
           this.state.sortedPerentages.map((candidate, index) => {
             // return this.state.candidates[candidate[0]].img
             if (index == 0){
-              return <p key={index} className="c1"><a href={this.state.candidates[candidate[0]].url}><img src={this.state.candidates[candidate[0]].img} alt="char" className='i1' /></a>{this.state.percentages[candidate[0]].toFixed(2)}% Candidate info.</p>
+              return <p key={index} className="c1"><a href={this.state.candidates[candidate[0]].url}><img src={this.state.candidates[candidate[0]].img} alt="char" className='i1' /></a>{this.state.percentages[candidate[0]].toFixed(2)}% match</p>
             } else {
-              return <p key={index} className="c2"><a href={this.state.candidates[candidate[0]].url}><img src={this.state.candidates[candidate[0]].img} alt="char" className='i2' /></a>{this.state.percentages[candidate[0]].toFixed(2)}% Candidate info.</p>
+              return <p key={index} className="c2"><a href={this.state.candidates[candidate[0]].url}><img src={this.state.candidates[candidate[0]].img} alt="char" className='i2' /></a>{this.state.percentages[candidate[0]].toFixed(2)}% match</p>
             }
           })
         }

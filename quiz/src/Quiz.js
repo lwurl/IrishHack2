@@ -128,7 +128,7 @@ class Quiz extends React.Component {
               if (q === `question${question_no}`){
                 console.log(questions_dict[q]);
                 for (var candidate in questions_dict[q]) {
-                  if (candidate !== 'blurb'){
+                  if (candidate !== 'blurb' && candidate !== 'desc'){
                     items.push({id: candidate, content: questions_dict[q][candidate]});
                   }
                 }
