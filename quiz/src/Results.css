@@ -25,6 +25,8 @@ h1{
     margin-right: 30%;
     margin-bottom:10px;
     text-align:left;
+    border: 2px solid#d30b0d; 
+    padding: 10px; 
   }
 
   .c2{
@@ -34,6 +36,9 @@ h1{
     margin-left: 30%;
     margin-right: 30%;
     text-align:left;
+    border: 2px solid#428bca; 
+    padding: 10px; 
+    margin-bottom:5px;
   }
 
   .c3{
@@ -44,6 +49,7 @@ h1{
     color: #FFFFFF;
     font-size:16pt;
     margin-left:20px;
+    margin-bottom:10px;
   }
 
   .buttonResults {
@@ -68,4 +74,5 @@ h1{
   .center_div{
     text-align: center;
     align-self: center;
+    margin-bottom:10px;
   }

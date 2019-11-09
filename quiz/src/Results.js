@@ -106,7 +106,7 @@ class Results extends React.Component {
           })
         }
         <p className="c3">Click on a candidate's picture to learn more about their vision for America.</p>
-        <Link to='/Detailed'> 
+        <Link to='/DetailedResults'> 
             <div className="center_div"><button type="button" className="buttonResults"><b>Detailed Results</b></button></div>
         </Link>
         <Link to='/Home'> 
