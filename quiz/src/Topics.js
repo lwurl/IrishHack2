@@ -118,7 +118,7 @@ class Topics extends React.Component {
         </div>
 
         <Link to='/quiz'> 
-          <div className="center_div"><button type="button" className="buttonTop" onClick={() => this.addTopicPreferences()}><b>Take Quiz</b></button></div>
+          <div className="take_quiz"><button type="button" className="buttonTop" onClick={() => this.addTopicPreferences()}><b>Take Quiz</b></button></div>
         </Link>
       </div>
     )
