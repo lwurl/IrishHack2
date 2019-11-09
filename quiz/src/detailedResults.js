@@ -142,6 +142,12 @@ class detailedResults extends React.Component {
             {
                 this.printQuotes()
             }
+            <Link to='/Results'> 
+            <div className="center_div"><button type="button" className="buttonDResults"><b>Results</b></button></div>
+        </Link>
+        <Link to='/Home'> 
+            <div className="center_div"><button type="button" className="buttonDResults"><b>Restart</b></button></div>
+        </Link>
         </div>
 
         )   
