@@ -15,7 +15,7 @@ class Results extends React.Component {
         <p className="c2"><img src={char} alt="char" className='i2'/> Candidate info.</p>
 
         <Link to='/Home'> 
-            <button type="button" className="button"><b>Restart</b></button>
+            <div className="center_div"><button type="button" className="button"><b>Restart</b></button></div>
         </Link>
         </div>
 
