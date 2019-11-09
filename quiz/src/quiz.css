@@ -10,11 +10,28 @@ p{
   margin:0px;
 }
 
+.blurb{
+  text-align:center;
+  font-family: 'Roboto', sans-serif;
+  color:#FFFFFF;
+  margin-left:15%;
+  margin-right:15%;
+  border: 2px solid#428bca; 
+  padding: 10px; 
+}
+
 .inst{
   text-align:center;
   font-family: 'Roboto', sans-serif;
   color:#FFFFFF;
-  margin:0px;
+  margin-left:15%;
+  margin-right:15%;
+}
+.smallBox{
+  margin-left:15%;
+  margin-right:15%;
+  border: 2px solid#d30b0d; 
+  padding: 10px; 
 }
 
 .left_col {
@@ -54,19 +71,12 @@ p{
   color: #ffffff;
 }
 
-
-
-.logo_div{
-  position: absolute;
-  top:25%;
-  left: 40%;
-}
-
 .drop{
   font-family: 'Roboto', sans-serif;
   padding: 0px; 
   margin: 0px auto;
   text-align:center;
+  align-self: center;
   width: 280px;  
 }
 
@@ -78,16 +88,13 @@ p{
   width: 280px;  
 }
 
-.logoSm{
-  width: 50%;
-  height: 50%;
+.mini{
+  width: 10%;
+  height: 10%;
 }
 
 .center_div_quiz{
   background-color:#013364;
   text-align: center;
   align-self: center;
-  position: absolute;
-  left: 47%;
-  top: 90%;
 }
