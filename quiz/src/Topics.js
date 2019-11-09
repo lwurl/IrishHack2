@@ -1,6 +1,12 @@
 import React from 'react';
 import './topics.css';
 import {Link} from 'react-router-dom';
+import gun from './images/gun.svg'
+import econ from './images/economy.svg'
+import edu from './images/education.svg'
+import hc from './images/hc.svg'
+import env from './images/env.svg'
+
 
 
 class Topics extends React.Component {
@@ -8,21 +14,65 @@ class Topics extends React.Component {
     return (
       <div>
         <h1>Topics</h1>
+
+        <img src={econ} alt="gun" className='icon'/>
+        <h2 class="topic_title">Economy</h2>
         <div class="slidecontainer">
-        <input type="range" min="1" max="101" defaultValue="50" class="slider" id="myRange" step="25" list="range-labels"/>
-        <div class="1">Not at all important Low Importance</div>
-        <div class="id2">Low importance</div>
-          <datalist id="range-labels" class="dl">
-          <option value="0" label="Not at all important" />
-          <option value="20" label="Low importance" />
-          <option value="45" label="Neutral" />
-          <option value="75" label="Important" />
-          <option value="100" label="Very Important" /> 
-          <Link to='/quiz'> 
-            <div className="center_div"><button type="button" className="button"><b>Take Quiz</b></button></div>
-          </Link>   
-        </datalist>
+        <input type="range" min="1" max="101" defaultValue="50" class="slider" id="myRange1" step="25" list="range-labels"/>
+        <div class="label_div not">Not at all important</div>
+        <div class="label_div low">Low importance</div>
+        <div class="label_div neutral">Neutral</div>
+        <div class="label_div important">Important</div>
+        <div class="label_div very">Very important</div> 
         </div>
+
+        <img src={edu} alt="gun" className='icon'/>
+        <h2 class="topic_title">Education</h2>
+        <div class="slidecontainer">
+        <input type="range" min="1" max="101" defaultValue="50" class="slider" id="myRange2" step="25" list="range-labels"/>
+        <div class="label_div not">Not at all important</div>
+        <div class="label_div low">Low importance</div>
+        <div class="label_div neutral">Neutral</div>
+        <div class="label_div important">Important</div>
+        <div class="label_div very">Very important</div> 
+        </div>
+
+        <img src={env} alt="gun" className='icon'/>
+        <h2 class="topic_title">Environment</h2>
+        <div class="slidecontainer">
+        <input type="range" min="1" max="101" defaultValue="50" class="slider" id="myRange3" step="25" list="range-labels"/>
+        <div class="label_div not">Not at all important</div>
+        <div class="label_div low">Low importance</div>
+        <div class="label_div neutral">Neutral</div>
+        <div class="label_div important">Important</div>
+        <div class="label_div very">Very important</div> 
+        </div>
+
+        <img src={gun} alt="gun" className='icon'/>
+        <h2 class="topic_title">Gun Control</h2>
+        <div class="slidecontainer">
+        <input type="range" min="1" max="101" defaultValue="50" class="slider" id="myRange4" step="25" list="range-labels"/>
+        <div class="label_div not">Not at all important</div>
+        <div class="label_div low">Low importance</div>
+        <div class="label_div neutral">Neutral</div>
+        <div class="label_div important">Important</div>
+        <div class="label_div very">Very important</div> 
+        </div>
+
+        <img src={hc} alt="gun" className='icon'/>
+        <h2 class="topic_title">Health Care</h2>
+        <div class="slidecontainer">
+        <input type="range" min="1" max="101" defaultValue="50" class="slider" id="myRange5" step="25" list="range-labels"/>
+        <div class="label_div not">Not at all important</div>
+        <div class="label_div low">Low importance</div>
+        <div class="label_div neutral">Neutral</div>
+        <div class="label_div important">Important</div>
+        <div class="label_div very">Very important</div> 
+        </div>
+
+        <Link to='/quiz'> 
+          <div className="center_div"><button type="button" className="buttonTop"><b>Take Quiz</b></button></div>
+        </Link>
       </div>
     )
   }

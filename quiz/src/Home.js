@@ -20,7 +20,7 @@ class Home extends React.Component {
         <hr></hr>
         <p className="p2">Welcome to Quote Vote, a web app that helps you understand what candidates you align with. Reflect on what issues are most important to you and get a customized, dynamically generated quiz where you rank anonymized quotes from candidates. Afterwards, see who said what and view your results to discern  which candidate best represents your views. </p>
         <Link to='/topics'> 
-          <div className="center_div"><button type="button" className="buttonMain"><b>Start Quiz</b></button></div>
+          <div className="center_div_home"><button type="button" className="buttonMain"><b>Start Quiz</b></button></div>
         </Link>
         </div>
 
