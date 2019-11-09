@@ -99,13 +99,16 @@ class Results extends React.Component {
           this.state.sortedPerentages.map((candidate, index) => {
             // return this.state.candidates[candidate[0]].img
             if (index == 0){
-              return <p key={index} className="c1"><a href={this.state.candidates[candidate[0]].url}><img src={this.state.candidates[candidate[0]].img} alt="char" className='i1' /></a>{this.state.percentages[candidate[0]].toFixed(2)}% match</p>
+              return <p key={index} className="c1"><a href={this.state.candidates[candidate[0]].url}><img src={this.state.candidates[candidate[0]].img} alt="char" className='i1' /></a> {this.state.percentages[candidate[0]].toFixed(2)}% match</p>
             } else {
-              return <p key={index} className="c2"><a href={this.state.candidates[candidate[0]].url}><img src={this.state.candidates[candidate[0]].img} alt="char" className='i2' /></a>{this.state.percentages[candidate[0]].toFixed(2)}% match</p>
+              return <p key={index} className="c2"><a href={this.state.candidates[candidate[0]].url}><img src={this.state.candidates[candidate[0]].img} alt="char" className='i2' /></a> {this.state.percentages[candidate[0]].toFixed(2)}% match</p>
             }
           })
         }
         <p className="c3">Click on a candidate's picture to learn more about their vision for America.</p>
+        <Link to='/Detailed'> 
+            <div className="center_div"><button type="button" className="buttonResults"><b>Detailed Results</b></button></div>
+        </Link>
         <Link to='/Home'> 
             <div className="center_div"><button type="button" className="buttonResults"><b>Restart</b></button></div>
         </Link>
