@@ -2,6 +2,7 @@ import React from 'react';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { db } from './firebase';
 import './quiz.css'
+import {Link} from 'react-router-dom';
 
 const getItems = (count, offset = 0) =>
     Array.from({ length: count }, (v, k) => k).map(k => ({
@@ -128,6 +129,9 @@ class Quiz extends React.Component {
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
         <div>
+        <Link to='/results'> 
+          <div className="center_div"><button type="button" className="button"><b>See Results</b></button></div>
+        </Link>
           <div className="left_col">
             <Droppable droppableId="droppable2">
               {(provided, snapshot) => (
@@ -193,5 +197,6 @@ class Quiz extends React.Component {
     )
   }
 }
+
 
 export default Quiz;

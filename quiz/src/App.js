@@ -8,6 +8,7 @@ import {
 import Home from './Home';
 import Topics from './Topics'
 import Quiz from './Quiz';
+import Results from './Results';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Route path="/home" component={Home} />
       <Route path="/topics" component={Topics} />
       <Route path="/quiz" component={Quiz} />
+      <Route path='/results' component={Results} />
     </div>
   </Router>
   );
