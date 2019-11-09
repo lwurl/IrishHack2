@@ -72,8 +72,6 @@ hr{
     background-color:#013364;
     text-align: center;
     align-self: center;
-    position: absolute;
-    left: 47%;
-    top: 90%;
+    margin-top:20px;
   }
 

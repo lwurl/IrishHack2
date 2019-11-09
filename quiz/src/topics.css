@@ -99,7 +99,6 @@
   padding: 15px 15px;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
   font-size: 16px;
   font-family: 'Roboto', sans-serif;
   border-radius:10px;
@@ -107,8 +106,9 @@
 }
 
 .take_quiz{
-    text-align: center;
-    align-self: center;
+  text-align: center;
+  align-self: center;
+  position: relative;
 }
 
 .icon{
@@ -118,50 +118,3 @@
   width:5%;
   height: auto;
 }
-
-/*.slidecontainer {
-    position: relative;
-    
-    &__input {
-      width: 100%;
-      -webkit-appearance: none;
-    
-      &::-webkit-slider-runnable-track {
-        background: #ccc;
-      }
-      
-      &::-moz-range-thumb {
-        background: #ccc;
-      }
-      
-      &::-ms-track {
-        background: transparent;
-      }
-      
-      &::-ms-fill-lower {
-        background: #e1e1e1;
-        border-radius: 10px; 
-      }
-      &::-ms-fill-upper {
-        background: #eee;
-      }
-    }
-    
-    &__list {
-      display: flex;
-      justify-content: space-between;
-      height: auto;
-      overflow: hidden;
-      margin-top: 6px; 
-    
-      &__opt:before {
-        content: '';
-        display: block;
-        width: 0;
-        height: auto;
-        padding-left: 3px;
-        text-indent: 0;
-      }
-    }
-  }*/
-
