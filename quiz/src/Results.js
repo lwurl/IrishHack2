@@ -3,9 +3,10 @@ import pete from './images/pete.jpg';
 import biden from './images/biden.jpg';
 import trump from './images/trump.jpg';
 import warren from './images/warren.jpg';
-import bernie from './images/bernie.jpg';
+import sanders from './images/bernie.jpg';
 import './Results.css'
 import {Link} from 'react-router-dom';
+import { db } from './firebase';
 
 class Results extends React.Component {
   constructor(props){
@@ -14,14 +15,14 @@ class Results extends React.Component {
       results: {
         'biden':86,
         'pete':64,
-        'bernie':15,
+        'sanders':15,
         'trump':15,
         'warren':0
       },
       percentages: {
         'biden':0,
         'pete':0,
-        'bernie':0,
+        'sanders':0,
         'trump':0,
         'warren':0
       },
@@ -34,9 +35,9 @@ class Results extends React.Component {
           'url': 'https://peteforamerica.com/issues/',
           'img': pete
         },
-        'bernie': {
-          'url': 'https://berniesanders.com/issues/',
-          'img': bernie
+        'sanders': {
+          'url': 'https://sanderssanders.com/issues/',
+          'img': sanders
         },
         'warren': {
           'url': 'https://elizabethwarren.com/plans',
@@ -57,15 +58,22 @@ class Results extends React.Component {
   }
 
   loadResults = async () => {
+    let results = {};
+    await db.collection("users").get().then((querySnapshot) => {
+      // only one user for now
+      querySnapshot.forEach((doc) => {
+        results = doc.data()['totals'];
+      });
+    });
     var percentages = {}
-    var total_points = this.state.results.biden + this.state.results.pete + this.state.results.bernie + this.state.results.trump + this.state.results.warren;
+    var total_points = parseInt(results.biden) + parseInt(results.pete) + parseInt(results.sanders) + parseInt(results.trump) + parseInt(results.warren);
     var num_questions = total_points/20;
     var high_score = num_questions * 10;
-    percentages['biden'] = this.state.results.biden/high_score * 100;
-    percentages['pete'] = this.state.results.pete/high_score * 100;
-    percentages['bernie'] = this.state.results.bernie/high_score * 100;
-    percentages['trump'] = this.state.results.trump/high_score * 100;
-    percentages['warren'] = this.state.results.warren/high_score * 100;
+    percentages['biden'] = parseInt(results.biden)/high_score * 100;
+    percentages['pete'] = parseInt(results.pete)/high_score * 100;
+    percentages['sanders'] = parseInt(results.sanders)/high_score * 100;
+    percentages['trump'] = parseInt(results.trump)/high_score * 100;
+    percentages['warren'] = parseInt(results.warren)/high_score * 100;
 
     let sortedPerentages = [];
 
