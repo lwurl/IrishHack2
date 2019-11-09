@@ -55,12 +55,6 @@ p{
 }
 
 
-.center_div{
-  margin:auto;
-  margin-top: 10px;
-  align: center;
-  align-self: center;
-}
 
 .logo_div{
   position: absolute;
@@ -87,4 +81,13 @@ p{
 .logoSm{
   width: 50%;
   height: 50%;
+}
+
+.center_div_quiz{
+  background-color:#013364;
+  text-align: center;
+  align-self: center;
+  position: absolute;
+  left: 47%;
+  top: 90%;
 }
