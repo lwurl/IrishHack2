@@ -57,9 +57,11 @@ class Quiz extends React.Component {
       questionCategoryList: [],
       previousQuestions: {},
       move: false,
+      question_category_show: '',
       question_category: '',
       blurb: '',
-      desc: ''
+      desc: '',
+      question_no: 0
     };
     console.log(this.state.items);
     this.moveToNextQuestion = this.moveToNextQuestion.bind(this);
@@ -106,23 +108,24 @@ class Quiz extends React.Component {
   loadQuotes = async () => {
     let items = [];
     const question_category = this.state.questionCategoryList.pop();
+    this.setState({ question_category });
     const previousQuestions = this.state.previousQuestions;
     let question_no;
     switch (question_category) {
       case 'economy':
-      this.setState({ question_category: 'Economy' });
+      this.setState({ question_category_show: 'Economy' });
       break;
       case 'education':
-      this.setState({ question_category: 'Education' });
+      this.setState({ question_category_show: 'Education' });
       break;
       case 'environment':
-      this.setState({ question_category: 'Environment' });
+      this.setState({ question_category_show: 'Environment' });
       break;
       case 'guncontrol':
-      this.setState({ question_category: 'Gun Control' });
+      this.setState({ question_category_show: 'Gun Control' });
       break;
       case 'healthcare':
-      this.setState({ question_category: 'Health Care' });
+      this.setState({ question_category_show: 'Health Care' });
       break;
     }
     if (question_category in this.state.previousQuestions) {
@@ -132,6 +135,7 @@ class Quiz extends React.Component {
       question_no = 1;
       this.setState({ previousQuestions: {...previousQuestions, [question_category]: 1}});
     }
+    this.setState({ question_no: `question${question_no}` });
 
     await db.collection("quotes").get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
@@ -207,23 +211,32 @@ class Quiz extends React.Component {
   moveToNextQuestion = async () => {
     const t = this;
     let curr_total = {};
+    let curr_responses = {};
     let doc_id;
     await db.collection("users").get().then((querySnapshot) => {
       // only one user for now
       querySnapshot.forEach((doc) => {
         doc_id = doc.id;
         curr_total = doc.data()['totals'];
+        curr_responses = doc.data()['responses'];
       });
     });
+
     console.log(curr_total);
+    console.log(curr_responses);
+    curr_responses[this.state.question_category][this.state.question_no]['answered'] = true;
     const selected = this.state.selected;
     const points = [10, 6, 3, 1, 0];
+
     for (let i = 0; i < selected.length; i++){
       const candidate = this.state.selected[i]['id'];
+      curr_responses[this.state.question_category][this.state.question_no][candidate] = i+1;
       curr_total[candidate] += points[i];
     }
+
     await db.collection("users").doc(doc_id).update({
-      totals: curr_total
+      totals: curr_total,
+      responses: curr_responses
     })
     .then(function() {
       console.log("Document successfully updated!");
@@ -232,6 +245,7 @@ class Quiz extends React.Component {
         // The document probably doesn't exist.
         console.error("Error updating document: ", error);
     });
+
     if (this.state.questionCategoryList.length === 0){
       t.setState({ move: true });
     }
@@ -246,7 +260,7 @@ class Quiz extends React.Component {
       <DragDropContext onDragEnd={this.onDragEnd}>
         <div className="top">
           <h1>
-            {`${this.state.question_category}: ${this.state.blurb}`}
+            {`${this.state.question_category_show}: ${this.state.blurb}`}
           </h1>
           <p className='inst'>{this.state.desc}</p>
           <br/>
