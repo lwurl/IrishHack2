@@ -46,8 +46,10 @@ class Results extends React.Component {
           'url': 'https://www.promiseskept.com/about/',
           'img': trump
         }
-      }
-    };;
+      },
+      sortedPerentages: []
+    };
+    this.loadResults = this.loadResults.bind(this);
   }
 
   async componentDidMount() {
@@ -65,18 +67,36 @@ class Results extends React.Component {
     percentages['trump'] = this.state.results.trump/high_score * 100;
     percentages['warren'] = this.state.results.warren/high_score * 100;
 
-    this.setState({ percentages });
+    let sortedPerentages = [];
+
+    for (var key in percentages) {
+        if (percentages.hasOwnProperty(key)) {
+          sortedPerentages.push( [ key, percentages[key] ] );
+        }
+    }
+
+    sortedPerentages.sort((a, b) => b[1] - a[1]);
+    console.log(sortedPerentages);
+
+    this.setState({ percentages, sortedPerentages });
+
+    console.log(this.state.sortedPerentages);
   }
 
   render() {
     return (
       <div>
         <h1>Results</h1>
-        <p className="c1"><a href={this.state.candidates.pete.url}><img src={this.state.candidates.pete.img} alt="char" className='i1'/></a> {this.state.percentages['pete'].toFixed(2)}% Candidate  info.</p>
-        <p className="c2"><a href={this.state.candidates.biden.url}><img src={this.state.candidates.biden.img} alt="char" className='i2'/></a> {this.state.percentages['biden'].toFixed(2)}% Candidate info.</p>
-        <p className="c2"><a href={this.state.candidates.trump.url}><img src={this.state.candidates.trump.img} alt="char" className='i2'/></a> {this.state.percentages['trump'].toFixed(2)}% Candidate info.</p>
-        <p className="c2"><a href={this.state.candidates.bernie.url}><img src={this.state.candidates.bernie.img} alt="char" className='i2'/></a> {this.state.percentages['bernie'].toFixed(2)}% Candidate info.</p>
-        <p className="c2"><a href={this.state.candidates.warren.url}><img src={this.state.candidates.warren.img} alt="char" className='i2'/></a> {this.state.percentages['warren'].toFixed(2)}% Candidate info.</p>
+        {
+          this.state.sortedPerentages.map((candidate, index) => {
+            // return this.state.candidates[candidate[0]].img
+            if (index == 0){
+              return <p key={index} className="c1"><a href={this.state.candidates[candidate[0]].url}><img src={this.state.candidates[candidate[0]].img} alt="char" className='i1' /></a>{this.state.percentages[candidate[0]].toFixed(2)}% Candidate info.</p>
+            } else {
+              return <p key={index} className="c2"><a href={this.state.candidates[candidate[0]].url}><img src={this.state.candidates[candidate[0]].img} alt="char" className='i2' /></a>{this.state.percentages[candidate[0]].toFixed(2)}% Candidate info.</p>
+            }
+          })
+        }
         <p className="c3">Click on a candidate's picture to learn more about their vision for America.</p>
         <Link to='/Home'> 
             <div className="center_div"><button type="button" className="buttonResults"><b>Restart</b></button></div>
