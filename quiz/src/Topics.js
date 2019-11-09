@@ -39,7 +39,14 @@ class Topics extends React.Component {
       });
     });
     await db.collection("users").doc(doc_id).update({
-      categories: this.state.topics
+      categories: this.state.topics,
+      totals: {
+        'biden': 0,
+        'pete': 0,
+        'sanders': 0,
+        'trump': 0,
+        'warren': 0
+      }
     })
     .then(function() {
       console.log("Document successfully updated!");
