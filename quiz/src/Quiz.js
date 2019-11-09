@@ -271,6 +271,7 @@ class Quiz extends React.Component {
             <h2>
               Unranked Quotes
             </h2>
+            <div className='center_div'>
             <Droppable droppableId="droppable" className='drop'>
                 {(provided, snapshot) => (
                     <div
@@ -300,9 +301,10 @@ class Quiz extends React.Component {
                     </div>
                 )}
             </Droppable>
+            </div>
           </div>
           <div className="logo_div">
-            <img src={logoSm} alt="logoSm"/>
+            <img src={logoSm} alt="logoSm" className='logoSm'/>
             </div>
           <div className="center_div">
             <button type="button" className="buttonQuiz" onClick={() => this.moveToNextQuestion()} disabled={this.state.items.length != 0}>
